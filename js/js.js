@@ -10,7 +10,6 @@ $(document).on({
 if(typeof(localStorage.userid)==='undefined'){
 	$.mobile.changePage('#login');
 }
-
 $(document).ready(function(){
 	$("#addIng").click(function(){
 		$.post("ajax/getAmounts.php",{action:"getAmounts"},function(response){
