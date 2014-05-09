@@ -1,17 +1,10 @@
-<?
-require_once "class/recipe.php";
-?>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
-<meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
- <link rel="stylesheet" type="text/css" href="css/index.css" />
 <link rel="stylesheet" href="css/themes/default/rtl.jquery.mobile-1.4.0.css">
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8"/>
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="js/rtl.jquery.mobile-1.4.0.js"></script>
 <script src="js/js.js" type="text/javascript" charset="utf-8"></script>
@@ -24,12 +17,12 @@ require_once "class/recipe.php";
   </div>
 
   <div data-role="main" class="ui-content">
-  		<form>
+  		<form method="post" action="">
   			<label for="name">שם משתמש:</label>
   			<input type="text" name="name" id="name" value="" placeholder="שם משתמש" data-theme="a">
   			<label for="pass">סיסמה:</label>
   			<input type="password" name="pass" id="pass" value="" placeholder="סיסמה" data-theme="a">
-  			<button type="submit" id="logbtn" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check ui-btn-inline">התחבר</button>
+  			<button type="button" id="logbtn" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check ui-btn-inline">התחבר</button>
   			<a href="#register" class="ui-btn ui-corner-all ui-btn-inline" style="float:left;">הרשם</a>
   		</form>
   		
@@ -48,7 +41,7 @@ require_once "class/recipe.php";
     <h1>הרשם</h1>
   </div>
   <div data-role="main" class="ui-content">
-  		<form>
+  		<form method="post" action="">
   			<label for="name">שם משתמש:</label>
   			<input type="text" name="name" id="name" value="" placeholder="שם משתמש" data-theme="a">
   			<label for="pass">סיסמה:</label>
