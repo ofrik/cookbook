@@ -12,13 +12,13 @@ if(typeof(localStorage.userid)==='undefined'){
 }
 $(document).ready(function(){
 	$("#addIng").click(function(){
-		$.post("ajax/getAmounts.php",{action:"getAmounts"},function(response){
+		$.post("http://staj.co.il/api/ajax/getAmounts.php",{action:"getAmounts"},function(response){
 			var amounts = JSON.parse(response);
 			var amountOptions = "";
 			$.each(amounts,function(index,elem){
 				amountOptions += "<option value='"+elem.id+"'>"+elem.name+"</option>";
 			});
-			$.post("ajax/getIngredients.php",{action:"getIngredients"},function(response){
+			$.post("http://staj.co.il/api/ajax/getIngredients.php",{action:"getIngredients"},function(response){
 				var ingredients = JSON.parse(response);
 				var ingredientsOptions = "";
 				$.each(ingredients,function(index,elem){
@@ -57,7 +57,7 @@ $(document).ready(function(){
 		var parent = $(this).parents(".recipe");
 		var id = parent.attr('data-id');
 		// store some data
-		$.post("ajax/getRecipes.php", {
+		$.post("http://staj.co.il/api/ajax/getRecipes.php", {
 			action:"user_unfav",
 			userid:localStorage.userid,
 			recipe_id:id
@@ -71,7 +71,7 @@ $(document).ready(function(){
 	$(document).delegate('.fav', 'click', function() {
 		var id = $("#recipe").attr('data-id');
 		// store some data
-		$.post("ajax/getRecipes.php", {
+		$.post("http://staj.co.il/api/ajax/getRecipes.php", {
 			action:"user_fav",
 			userid:localStorage.userid,
 			recipe_id:id
@@ -87,7 +87,7 @@ function remakeSelect(type){
 	if(type=='amount'){
 		$("select[name='amount[]']").each(function(index,elem){
 			var selected = $(elem).val();
-			$.post("ajax/getAmounts.php",{action:"getAmounts"},function(response){
+			$.post("http://staj.co.il/api/ajax/getAmounts.php",{action:"getAmounts"},function(response){
 				var amounts = JSON.parse(response);
 				var amountOptions = "";
 				var select;
@@ -113,7 +113,7 @@ function remakeSelect(type){
 	if(type=='ingredient'){
 		$("select[name='ing[]']").each(function(index,elem){
 			var selected = $(elem).val();
-			$.post("ajax/getIngredients.php",{action:"getIngredients"},function(response){
+			$.post("http://staj.co.il/api/ajax/getIngredients.php",{action:"getIngredients"},function(response){
 				var ingredients = JSON.parse(response);
 				var ingredientsOptions = "";
 				var select;
@@ -147,7 +147,7 @@ $(document).on('pageinit', '#login', function(){
 	$(document).on('click', '#logbtn', function() { // catch the form's submit event
             if($('#login #name').val().length > 0 && $('#login #pass').val().length > 0){
             	var s = $('#login form').serialize();
-            	$.post("ajax/user.php",{action : 'login', formData : $('#login form').serialize()},function(response){
+            	$.post("http://staj.co.il/api/ajax/user.php",{action : 'login', formData : $('#login form').serialize()},function(response){
             		var res = JSON.parse(response);
             		if(res.status) {
                     	localStorage.userid = res.id;
@@ -168,7 +168,7 @@ $(document).on('pageinit', '#register', function(){
 			var pass2 = $('#register #pass2').val();
             if(name.length>0&&pass1.length>0&&pass1==pass2){
             	var s = $('#register form').serialize();
-            	$.post("ajax/user.php",{action : 'register', formData : $('#register form').serialize()},function(response){
+            	$.post("http://staj.co.il/api/ajax/user.php",{action : 'register', formData : $('#register form').serialize()},function(response){
             		var res = JSON.parse(response);
             		if(res.status) {
                     	localStorage.userid = res.id;
@@ -188,7 +188,7 @@ $(document).on('pageinit', '#newrecipe', function(){
         $("#addAmount").popup();
         $(document).on('click', '#ingsub', function() { // catch the form's submit event
         	if($("#ingName").val().length>0){
-        		$.post("ajax/getIngredients.php",{action:"addIngredient",name:$("#ingName").val()},function(response){
+        		$.post("http://staj.co.il/api/ajax/getIngredients.php",{action:"addIngredient",name:$("#ingName").val()},function(response){
         			if(response=="1"){
         				$("#ingName").val('');
         				remakeSelect("ingredient");
@@ -203,7 +203,7 @@ $(document).on('pageinit', '#newrecipe', function(){
      	});
      	$(document).on('click', '#amsub', function() { // catch the form's submit event
      		if($("#amountName").val().length>0){
-        		$.post("ajax/getAmounts.php",{action:"addAmount",name:$("#amountName").val()},function(response){
+        		$.post("http://staj.co.il/api/ajax/getAmounts.php",{action:"addAmount",name:$("#amountName").val()},function(response){
         			if(response=="1"){
         				$("#amountName").val('');
         				remakeSelect("amount");
@@ -219,7 +219,7 @@ $(document).on('pageinit', '#newrecipe', function(){
         $(document).on('click', '#submit', function() { // catch the form's submit event
             if($('#newrecipe #name').val().length > 0 && $('#newrecipe #desc').val().length > 0 && $('#newrecipe #orders').val().length > 0){
             	var s = $('#newrecipe form').serialize();
-            	$.post("ajax/newRecipe.php",{action : 'newRecipe', formData : $('#newrecipe form').serialize(),userid:localStorage.userid},function(response){
+            	$.post("http://staj.co.il/api/ajax/newRecipe.php",{action : 'newRecipe', formData : $('#newrecipe form').serialize(),userid:localStorage.userid},function(response){
             		var res = JSON.parse(response);
             		if(res.status) {
                     	alert('התווסף בהצלחה');
@@ -235,7 +235,7 @@ $(document).on('pageinit', '#newrecipe', function(){
         });   
 });
 $(document).on("pageshow", "#myrecipes", function(event) {
-	$.post("ajax/getRecipes.php",{action:"get_user_fav",userid:localStorage.userid},function(response){
+	$.post("http://staj.co.il/api/ajax/getRecipes.php",{action:"get_user_fav",userid:localStorage.userid},function(response){
 		var recipes = JSON.parse(response);
 		$('#myFavRecipes').empty();
 		var addDelete,addEdit;
@@ -267,7 +267,7 @@ $(document).on("pageshow", "#myrecipes", function(event) {
 		if ( typeof (Storage) !== "undefined") {
 			localStorage.recipeid = id;
 		}
-		$.post("ajax/getRecipe.php", {
+		$.post("http://staj.co.il/api/ajax/getRecipe.php", {
 			id : id
 		}, function(response) {
 			var recipe = JSON.parse(response);
@@ -293,7 +293,7 @@ $(document).on("pageinit", "#search", function(event) {
 		if ( typeof (Storage) !== "undefined") {
 			localStorage.recipeid = id;
 		}
-		$.post("ajax/getRecipe.php", {
+		$.post("http://staj.co.il/api/ajax/getRecipe.php", {
 			id : id
 		}, function(response) {
 			var recipe = JSON.parse(response);
@@ -312,7 +312,7 @@ $(document).on("pageinit", "#search", function(event) {
 });
 
 function getResults(value) {
-	$.post("ajax/getRecipes.php", {
+	$.post("http://staj.co.il/api/ajax/getRecipes.php", {
 		str : value,
 		search : true,
 		action:"search"
